@@ -21,16 +21,25 @@ using System.Collections.Generic;
 
 namespace MuseumOfFineArts
 {
+	public enum PaintingRarityEnum
+    {
+		very_common,
+		common,
+		rare,
+		very_rare,
+		unique
+    }
+
 	public class PaintingRarity
     {
 		public PaintingRarity(string rarity)
         {
-			_rarity = rarity;
+			_enum = Enum.Parse<PaintingRarityEnum>(rarity);
         }
 
-		private string _rarity;
+		private PaintingRarityEnum _enum;
 
-		public string Rarity { get { return _rarity; } }
+		public string Rarity { get { return _enum.ToString(); } }
     }
 
 	public class Painting
