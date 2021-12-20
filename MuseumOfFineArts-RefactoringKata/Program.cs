@@ -30,26 +30,14 @@ namespace MuseumOfFineArts
 		unique
     }
 
-	public class PaintingRarity
-    {
-		public PaintingRarity(string rarity)
-        {
-			_enum = Enum.Parse<PaintingRarityEnum>(rarity);
-        }
-
-		private PaintingRarityEnum _enum;
-
-		public string Rarity { get { return _enum.ToString(); } }
-    }
-
 	public class Painting
 	{
-		private PaintingRarity _rarity = new PaintingRarity("common");
+		private PaintingRarityEnum _rarity = PaintingRarityEnum.common;
 
 		public string Name { get; set; }
 		public string Artist { get; set; }
 		public decimal Value { get; set; }
-		public string Rarity { get { return _rarity.Rarity; } set { _rarity = new PaintingRarity(value); } }
+		public string zzzOLDRarity { get { return _rarity.ToString(); } set { _rarity = Enum.Parse<PaintingRarityEnum>(value); } }
 		public Dictionary<string, (string, decimal)> TransactionLog { get; set; } = new Dictionary<string, (string, decimal)>();
 	}
 
@@ -65,20 +53,20 @@ namespace MuseumOfFineArts
 		public decimal FinalPaintingValue(Painting p)
 		{
 			decimal rarityModifier = 1.0m;
-			if (p.Rarity == "very_common")
+			if (p.zzzOLDRarity == "very_common")
 			{
 				rarityModifier = 0.5m;
 			}
-			else if (p.Rarity == "unique")
+			else if (p.zzzOLDRarity == "unique")
 			{
 				rarityModifier = 1.5m;
 			}
-			else if (p.Rarity == "rare")
+			else if (p.zzzOLDRarity == "rare")
 			{
 				rarityModifier = 3.0m;
 			}
 
-			if (p.Rarity == CurrentlyPopularRarity)
+			if (p.zzzOLDRarity == CurrentlyPopularRarity)
 			{
 				rarityModifier *= 2.0m;
 			}
@@ -102,7 +90,7 @@ namespace MuseumOfFineArts
 			foreach (Painting p in Paintings)
 			{
 				decimal value = FinalPaintingValue(p);
-				Console.WriteLine($"{p.Name} ({p.Rarity}) is worth {value} zorknids and has transfered hands {p.TransactionLog.Count} times");
+				Console.WriteLine($"{p.Name} ({p.zzzOLDRarity}) is worth {value} zorknids and has transfered hands {p.TransactionLog.Count} times");
 			}
 		}
 
@@ -145,7 +133,7 @@ namespace MuseumOfFineArts
 			{
 				Name = "The Eating of The Cheeseburger",
 				Value = 275000.0m,
-				Rarity = "rare",
+				zzzOLDRarity = "rare",
 				TransactionLog =
 			{
 				{ "06/02/2006", ("sold to museum", 100000) }
@@ -158,7 +146,7 @@ namespace MuseumOfFineArts
 				Name = "Day Eagles",
 				Artist = "Edward Bopper",
 				Value = 500000.0m,
-				Rarity = "very_rare",
+				zzzOLDRarity = "very_rare",
 				TransactionLog =
 			{
 				{ "08/15/1994", ("sold to Jenny Downloadface", 50000) },
