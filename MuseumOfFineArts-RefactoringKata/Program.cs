@@ -50,6 +50,13 @@ namespace MuseumOfFineArts
 
 		public decimal FinalPaintingValue(Painting p)
         {
+            decimal rarityModifier = getRarityModifier(p);
+
+            return p.Value * rarityModifier * getArtMarketModifier();
+        }
+
+        private decimal getRarityModifier(Painting p)
+        {
             decimal rarityModifier = 1.0m;
             if (p.Rarity == PaintingRarity.very_common)
             {
@@ -69,7 +76,7 @@ namespace MuseumOfFineArts
                 rarityModifier *= 2.0m;
             }
 
-            return p.Value * rarityModifier * getArtMarketModifier();
+            return rarityModifier;
         }
 
         private decimal getArtMarketModifier()
