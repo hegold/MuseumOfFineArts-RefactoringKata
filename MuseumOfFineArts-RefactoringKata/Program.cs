@@ -11,12 +11,13 @@
  * [] Encapsulate Collection
  * [] Replace Temp with Query
  * [] Extract Class
- * [] Substitute Algorithm
+ * [X] Substitute Algorithm
  * [] BONUS: Encapsulate Record 
  *
 */
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace MuseumOfFineArts
@@ -103,16 +104,7 @@ namespace MuseumOfFineArts
 
 		public int GetCountOfAnonymousPaintings()
 		{
-			int count = 0;
-			foreach (Painting p in Paintings)
-			{
-				if (string.IsNullOrWhiteSpace(p.Artist))
-				{
-					count += 1;
-				}
-			}
-
-			return count;
+			return Paintings.Where(p => string.IsNullOrWhiteSpace(p.Artist)).Count();
 		}
 	}
 
