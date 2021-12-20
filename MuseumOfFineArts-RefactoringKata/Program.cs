@@ -50,9 +50,7 @@ namespace MuseumOfFineArts
 
 		public decimal FinalPaintingValue(Painting p)
         {
-            decimal rarityModifier = getRarityModifier(p);
-
-            return p.Value * rarityModifier * getArtMarketModifier();
+            return p.Value * getRarityModifier(p) * getArtMarketModifier();
         }
 
         private decimal getRarityModifier(Painting p)
