@@ -69,9 +69,7 @@ namespace MuseumOfFineArts
                 rarityModifier *= 2.0m;
             }
 
-            decimal artMarketModifier = getArtMarketModifier();
-
-            return p.Value * rarityModifier * artMarketModifier;
+            return p.Value * rarityModifier * getArtMarketModifier();
         }
 
         private decimal getArtMarketModifier()
