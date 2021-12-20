@@ -32,13 +32,10 @@ namespace MuseumOfFineArts
 
 	public class Painting
 	{
-		private PaintingRarity _rarity = PaintingRarity.common;
-
 		public string Name { get; set; }
 		public string Artist { get; set; }
 		public decimal Value { get; set; }
-		public string zzzOLDRarity { get { return _rarity.ToString(); } set { _rarity = Enum.Parse<PaintingRarity>(value); } }
-		public PaintingRarity Rarity { get { return _rarity; } set { _rarity = value; } }
+		public PaintingRarity Rarity { get; set; } = PaintingRarity.common;
 		public Dictionary<string, (string, decimal)> TransactionLog { get; set; } = new Dictionary<string, (string, decimal)>();
 	}
 
