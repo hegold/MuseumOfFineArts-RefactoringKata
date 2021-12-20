@@ -49,40 +49,47 @@ namespace MuseumOfFineArts
 		public PaintingRarity CurrentlyPopularRarity { get; set; } = PaintingRarity.very_rare;
 
 		public decimal FinalPaintingValue(Painting p)
-		{
-			decimal rarityModifier = 1.0m;
-			if (p.Rarity == PaintingRarity.very_common)
-			{
-				rarityModifier = 0.5m;
-			}
-			else if (p.Rarity == PaintingRarity.unique)
-			{
-				rarityModifier = 1.5m;
-			}
-			else if (p.Rarity == PaintingRarity.rare)
-			{
-				rarityModifier = 3.0m;
-			}
+        {
+            decimal rarityModifier = 1.0m;
+            if (p.Rarity == PaintingRarity.very_common)
+            {
+                rarityModifier = 0.5m;
+            }
+            else if (p.Rarity == PaintingRarity.unique)
+            {
+                rarityModifier = 1.5m;
+            }
+            else if (p.Rarity == PaintingRarity.rare)
+            {
+                rarityModifier = 3.0m;
+            }
 
-			if (p.Rarity == CurrentlyPopularRarity)
-			{
-				rarityModifier *= 2.0m;
-			}
+            if (p.Rarity == CurrentlyPopularRarity)
+            {
+                rarityModifier *= 2.0m;
+            }
 
-			decimal artMarketModifier;
-			if (!IsArtCurrentlyTrending)
-			{
-				artMarketModifier = 0.8m;
-			}
-			else
-			{
-				artMarketModifier = 1.25m - (decimal)ArtMarketSaturation;
-			}
+            decimal artMarketModifier = getArtMarketModifier();
 
             return p.Value * rarityModifier * artMarketModifier;
-		}
+        }
 
-		public void DisplayPaintingValues()
+        private decimal getArtMarketModifier()
+        {
+            decimal artMarketModifier;
+            if (!IsArtCurrentlyTrending)
+            {
+                artMarketModifier = 0.8m;
+            }
+            else
+            {
+                artMarketModifier = 1.25m - (decimal)ArtMarketSaturation;
+            }
+
+            return artMarketModifier;
+        }
+
+        public void DisplayPaintingValues()
 		{
 			foreach (Painting p in Paintings)
 			{
