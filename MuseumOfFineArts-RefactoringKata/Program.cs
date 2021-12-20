@@ -21,7 +21,7 @@ using System.Collections.Generic;
 
 namespace MuseumOfFineArts
 {
-	public enum PaintingRarityEnum
+	public enum PaintingRarity
     {
 		very_common,
 		common,
@@ -32,12 +32,13 @@ namespace MuseumOfFineArts
 
 	public class Painting
 	{
-		private PaintingRarityEnum _rarity = PaintingRarityEnum.common;
+		private PaintingRarity _rarity = PaintingRarity.common;
 
 		public string Name { get; set; }
 		public string Artist { get; set; }
 		public decimal Value { get; set; }
-		public string zzzOLDRarity { get { return _rarity.ToString(); } set { _rarity = Enum.Parse<PaintingRarityEnum>(value); } }
+		public string zzzOLDRarity { get { return _rarity.ToString(); } set { _rarity = Enum.Parse<PaintingRarity>(value); } }
+		public PaintingRarity Rarity { get { return _rarity; } set { _rarity = value; } }
 		public Dictionary<string, (string, decimal)> TransactionLog { get; set; } = new Dictionary<string, (string, decimal)>();
 	}
 
@@ -53,15 +54,15 @@ namespace MuseumOfFineArts
 		public decimal FinalPaintingValue(Painting p)
 		{
 			decimal rarityModifier = 1.0m;
-			if (p.zzzOLDRarity == "very_common")
+			if (p.Rarity == PaintingRarity.very_common)
 			{
 				rarityModifier = 0.5m;
 			}
-			else if (p.zzzOLDRarity == "unique")
+			else if (p.Rarity == PaintingRarity.unique)
 			{
 				rarityModifier = 1.5m;
 			}
-			else if (p.zzzOLDRarity == "rare")
+			else if (p.Rarity == PaintingRarity.rare)
 			{
 				rarityModifier = 3.0m;
 			}
@@ -90,7 +91,7 @@ namespace MuseumOfFineArts
 			foreach (Painting p in Paintings)
 			{
 				decimal value = FinalPaintingValue(p);
-				Console.WriteLine($"{p.Name} ({p.zzzOLDRarity}) is worth {value} zorknids and has transfered hands {p.TransactionLog.Count} times");
+				Console.WriteLine($"{p.Name} ({p.Rarity}) is worth {value} zorknids and has transfered hands {p.TransactionLog.Count} times");
 			}
 		}
 
@@ -133,7 +134,7 @@ namespace MuseumOfFineArts
 			{
 				Name = "The Eating of The Cheeseburger",
 				Value = 275000.0m,
-				zzzOLDRarity = "rare",
+				Rarity = PaintingRarity.rare,
 				TransactionLog =
 			{
 				{ "06/02/2006", ("sold to museum", 100000) }
@@ -146,7 +147,7 @@ namespace MuseumOfFineArts
 				Name = "Day Eagles",
 				Artist = "Edward Bopper",
 				Value = 500000.0m,
-				zzzOLDRarity = "very_rare",
+				Rarity = PaintingRarity.very_rare,
 				TransactionLog =
 			{
 				{ "08/15/1994", ("sold to Jenny Downloadface", 50000) },
