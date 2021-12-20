@@ -7,7 +7,7 @@
  * You've inputed a few paintings (the ones defined in Main()) but still aren't sure how this tool even works. 
  * The code must be refactored!
  *
- * [X?] Replace Primitive with Object
+ * [X] Replace Primitive with Object
  * [] Encapsulate Collection
  * [] Replace Temp with Query
  * [] Extract Class
@@ -79,8 +79,7 @@ namespace MuseumOfFineArts
 				artMarketModifier = 1.25m - (decimal)ArtMarketSaturation;
 			}
 
-			decimal val = p.Value * rarityModifier * artMarketModifier;
-			return val;
+            return p.Value * rarityModifier * artMarketModifier;
 		}
 
 		public void DisplayPaintingValues()
