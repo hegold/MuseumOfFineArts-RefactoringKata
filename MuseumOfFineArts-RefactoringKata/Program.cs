@@ -7,7 +7,7 @@
  * You've inputed a few paintings (the ones defined in Main()) but still aren't sure how this tool even works. 
  * The code must be refactored!
  *
- * [] Replace Primitive with Object
+ * [X?] Replace Primitive with Object
  * [] Encapsulate Collection
  * [] Replace Temp with Query
  * [] Extract Class
@@ -21,12 +21,26 @@ using System.Collections.Generic;
 
 namespace MuseumOfFineArts
 {
+	public class PaintingRarity
+    {
+		public PaintingRarity(string rarity)
+        {
+			_rarity = rarity;
+        }
+
+		private string _rarity;
+
+		public string Rarity { get { return _rarity; } }
+    }
+
 	public class Painting
 	{
+		private PaintingRarity _rarity = new PaintingRarity("common");
+
 		public string Name { get; set; }
 		public string Artist { get; set; }
 		public decimal Value { get; set; }
-		public string Rarity { get; set; } = "common";
+		public string Rarity { get { return _rarity.Rarity; } set { _rarity = new PaintingRarity(value); } }
 		public Dictionary<string, (string, decimal)> TransactionLog { get; set; } = new Dictionary<string, (string, decimal)>();
 	}
 
