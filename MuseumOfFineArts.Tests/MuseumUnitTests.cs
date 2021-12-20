@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
 
 namespace MuseumOfFineArts.Tests
 {
@@ -48,6 +49,64 @@ namespace MuseumOfFineArts.Tests
 			decimal actual = m.FinalPaintingValue(p);
 
 			Assert.AreEqual(4.8m, actual);
+		}
+
+		[TestMethod]
+		public void SomePaintings_DisplayPaintingValues_EmitsFormattedValues()
+		{
+			Museum museum = new Museum();
+            museum.Paintings.Add(new Painting
+            {
+                Name = "Bold and Brash",
+                Artist = "Squidward",
+                Value = 100.0m,
+                TransactionLog =
+            {
+                { "08/15/1997", ("sold to Bob Binley", 1000) },
+                { "08/18/1997", ("sold to Larry Schmelton", 2500) },
+                { "02/05/2004", ("sold to museum", 100) }
+            }
+            });
+            museum.Paintings.Add(new Painting
+            {
+                Name = "The Eating of The Cheeseburger",
+                Value = 275000.0m,
+                Rarity = "rare",
+                TransactionLog =
+            {
+                { "06/02/2006", ("sold to museum", 100000) }
+            }
+            });
+			var consoleOutput = new StringWriter();
+			System.Console.SetOut(consoleOutput);
+
+			museum.DisplayPaintingValues();
+
+			Assert.AreEqual("Bold and Brash (common) is worth 80.000 zorknids and has transfered hands 3 times\r\nThe Eating of The Cheeseburger (rare) is worth 660000.000 zorknids and has transfered hands 1 times\r\n", consoleOutput.ToString());
+		}
+
+		[TestMethod]
+		public void RarePaintingWithTrendingArtMarket_FinalPaintingValue_IsCorrect()
+		{
+			Museum m = new Museum();
+			m.IsArtCurrentlyTrending = true;
+			Painting p = new Painting { Value = 2.0m, Rarity = "rare" };
+
+			decimal actual = m.FinalPaintingValue(p);
+
+			Assert.AreEqual(1.5m, actual);
+		}
+
+		[TestMethod]
+		public void VeryCommonPaintingWithNonTrendingArtMarket_FinalPaintingValue_IsAValue()
+		{
+			Museum m = new Museum();
+			m.IsArtCurrentlyTrending = false;
+			Painting p = new Painting { Value = 2.0m, Rarity = "very_common" };
+
+			decimal actual = m.FinalPaintingValue(p);
+
+			Assert.AreEqual(0.8m, actual);
 		}
 
 		[TestMethod]
