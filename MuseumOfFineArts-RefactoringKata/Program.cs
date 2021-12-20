@@ -49,7 +49,7 @@ namespace MuseumOfFineArts
 		// art market conditions
 		public bool IsArtCurrentlyTrending { get; set; }
 		public float ArtMarketSaturation { get; set; } = 1.0f;
-		public string CurrentlyPopularRarity { get; set; } = "very_rare";
+		public PaintingRarity CurrentlyPopularRarity { get; set; } = PaintingRarity.very_rare;
 
 		public decimal FinalPaintingValue(Painting p)
 		{
@@ -67,7 +67,7 @@ namespace MuseumOfFineArts
 				rarityModifier = 3.0m;
 			}
 
-			if (p.zzzOLDRarity == CurrentlyPopularRarity)
+			if (p.Rarity == CurrentlyPopularRarity)
 			{
 				rarityModifier *= 2.0m;
 			}
